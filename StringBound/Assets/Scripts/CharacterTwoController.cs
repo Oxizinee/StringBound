@@ -25,8 +25,25 @@ public class CharacterTwoController : MonoBehaviour
         Move();
 
     }
+    private bool isGrounded()
+    {
+        Debug.DrawRay(new Vector3(transform.position.x, transform.position.y - (transform.localScale.y / 2), transform.position.z), -Vector3.up, Color.red);
+        if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - (transform.localScale.y / 2), transform.position.z), -Vector3.up, 0.8f))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     private void Move()
     {
         _rb.velocity = new Vector3(Vector3.right.x * _input.x * MovementSpeed, _rb.velocity.y, Vector3.forward.z * _input.y * MovementSpeed);
+
+        if (!isGrounded())
+        {
+            _rb.AddForce(-Vector3.up * 9.81f);
+        }
     }
 }

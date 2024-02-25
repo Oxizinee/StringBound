@@ -10,8 +10,10 @@ public class CharacterController : MonoBehaviour
     public float JumpForce = 7;
     public bool _isGrounded;
 
+
     public GameObject Character2;
 
+    private bool _spacePressed;
     private Vector2 _input;
     private Rigidbody _rb;
     private SpringJoint _springJoint;
@@ -27,7 +29,7 @@ public class CharacterController : MonoBehaviour
     void Update()
     {
         _input = new Vector2(Input.GetAxis("HorizontalOne"), Input.GetAxis("VerticalOne"));
-
+        _spacePressed = Input.GetKey(KeyCode.Space);
     }
     private void FixedUpdate()
     {
@@ -64,7 +66,7 @@ public class CharacterController : MonoBehaviour
     {
         _rb.velocity = new Vector3(Vector3.right.x * _input.x * MovementSpeed, _rb.velocity.y, Vector3.forward.z * _input.y * MovementSpeed);
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
+        if (_spacePressed && isGrounded())
         {
             _rb.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
         }
