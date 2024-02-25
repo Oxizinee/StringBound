@@ -299,8 +299,8 @@ SpringJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 1
   m_EnablePreprocessing: 1
-  m_MassScale: 1
-  m_ConnectedMassScale: 1
+  m_MassScale: 5
+  m_ConnectedMassScale: 4
 --- !u!120 &234454799
 LineRenderer:
   serializedVersion: 2

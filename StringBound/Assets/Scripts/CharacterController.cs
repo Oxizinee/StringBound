@@ -27,7 +27,6 @@ public class CharacterController : MonoBehaviour
     void Update()
     {
         _input = new Vector2(Input.GetAxis("HorizontalOne"), Input.GetAxis("VerticalOne"));
-        CableControl();
 
     }
     private void FixedUpdate()
@@ -54,11 +53,6 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    private void CableControl()
-    {
-        float characterDistance = Vector3.Distance(transform.position, Character2.transform.position);
-        //_springJoint.maxDistance = characterDistance * 0.2f;
-    }
     private void DrawRope()
     {
         _lineRenderer.positionCount = 2;
