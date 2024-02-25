@@ -28,6 +28,9 @@ public class CharacterController : MonoBehaviour
     {
         _input = new Vector2(Input.GetAxis("HorizontalOne"), Input.GetAxis("VerticalOne"));
 
+    }
+    private void FixedUpdate()
+    {
         Move();
     }
 
@@ -38,7 +41,7 @@ public class CharacterController : MonoBehaviour
     private bool isGrounded()
     {
         Debug.DrawRay(new Vector3(transform.position.x, transform.position.y - (transform.localScale.y / 2), transform.position.z), -Vector3.up, Color.red);
-        if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - (transform.localScale.y/2), transform.position.z),-Vector3.up, 0.5f))
+        if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - (transform.localScale.y/2), transform.position.z),-Vector3.up, 0.8f))
             {
                 _isGrounded = true;
                 return true;
@@ -58,21 +61,11 @@ public class CharacterController : MonoBehaviour
 
     private void Move()
     {
-      
-            if (_input.x != 0)
-            {
-                transform.position += Vector3.right * _input.x * Time.deltaTime * MovementSpeed;
-            }
-            if (_input.y != 0)
-            {
-                transform.position += Vector3.forward * _input.y * Time.deltaTime * MovementSpeed;
-            }
-
+        _rb.velocity = new Vector3(Vector3.right.x * _input.x * MovementSpeed, _rb.velocity.y, Vector3.forward.z * _input.y * MovementSpeed);
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
         {
             _rb.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
-            //transform.position += Vector3.up * Time.deltaTime * JumpForce;
         }
         else if(!isGrounded())
         {
