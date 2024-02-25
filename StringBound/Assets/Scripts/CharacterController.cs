@@ -6,13 +6,13 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {
     // Start is called before the first frame update
-    public float currentSpeed;
     public float MovementSpeed = 5;
-    public float maxVelocity = 20;
+    public float JumpForce = 7;
+    public bool _isGrounded;
 
     public GameObject Character2;
 
-    private Vector2 _inputOne, _inputTwo;
+    private Vector2 _input;
     private Rigidbody _rb;
     private SpringJoint _springJoint;
     private LineRenderer _lineRenderer;
@@ -26,8 +26,7 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _inputOne = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-       // _springJoint.connectedAnchor = Character2.transform.position;
+        _input = new Vector2(Input.GetAxis("HorizontalOne"), Input.GetAxis("VerticalOne"));
 
         Move();
     }
@@ -36,7 +35,20 @@ public class CharacterController : MonoBehaviour
     {
         DrawRope();
     }
-
+    private bool isGrounded()
+    {
+        Debug.DrawRay(new Vector3(transform.position.x, transform.position.y - (transform.localScale.y / 2), transform.position.z), -Vector3.up, Color.red);
+        if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - (transform.localScale.y/2), transform.position.z),-Vector3.up, 0.5f))
+            {
+                _isGrounded = true;
+                return true;
+            }
+        else
+        {
+            _isGrounded = false;
+            return false;
+        }
+    }
     private void DrawRope()
     {
         _lineRenderer.positionCount = 2;
@@ -46,14 +58,25 @@ public class CharacterController : MonoBehaviour
 
     private void Move()
     {
+      
+            if (_input.x != 0)
+            {
+                transform.position += Vector3.right * _input.x * Time.deltaTime * MovementSpeed;
+            }
+            if (_input.y != 0)
+            {
+                transform.position += Vector3.forward * _input.y * Time.deltaTime * MovementSpeed;
+            }
 
-        if (_inputOne.x != 0)
+
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
         {
-           transform.position += transform.right * _inputOne.x * Time.deltaTime * MovementSpeed;
+            _rb.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
+            //transform.position += Vector3.up * Time.deltaTime * JumpForce;
         }
-        if (_inputOne.y != 0)
+        else if(!isGrounded())
         {
-            transform.position += transform.forward * _inputOne.y * Time.deltaTime * MovementSpeed;
+            _rb.AddForce(-Vector3.up * 9.81f);
         }
 
     }
