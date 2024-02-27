@@ -12,8 +12,11 @@ public class TriggerBehaviour : MonoBehaviour
     {
         if (other.gameObject.tag == ObjectTag)
         {
-            _doors = GameObject.FindGameObjectWithTag("Door");
-            _doors.GetComponent<Door>().check[checkNumber] = true;
+            if (GameObject.FindGameObjectWithTag("Door") != null)
+            {
+                _doors = GameObject.FindGameObjectWithTag("Door");
+                _doors.GetComponent<Door>().check[checkNumber] = true;
+            }
         }
     }
 
