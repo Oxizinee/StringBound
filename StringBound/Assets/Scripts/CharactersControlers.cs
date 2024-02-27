@@ -69,7 +69,7 @@ public class CharactersControlers : MonoBehaviour
 
     private void DrawRope()
     {
-        _lineRenderer.positionCount = 2;
+        _lineRenderer.positionCount = 3;
         _lineRenderer.SetPosition(0, transform.position);
         _lineRenderer.SetPosition(1, Character2.transform.position);
     }

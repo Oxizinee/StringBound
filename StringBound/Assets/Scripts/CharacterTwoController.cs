@@ -45,7 +45,7 @@ public class CharacterTwoController : MonoBehaviour
 
         if (!isGrounded())
         {
-            _rb.AddForce(-Vector3.up * 9.81f);
+            _rb.AddForce(-Vector3.up * 15);
         }
     }
 }

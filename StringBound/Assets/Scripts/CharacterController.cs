@@ -12,7 +12,7 @@ public class CharacterController : MonoBehaviour
     public float JumpForce = 7;
     public bool _isGrounded;
 
-
+    public GameObject Sphere, SphereTwo, SphereThree;
     public GameObject Character2;
 
     private bool _jumpPressed;
@@ -66,9 +66,12 @@ public class CharacterController : MonoBehaviour
 
     private void DrawRope()
     {
-        _lineRenderer.positionCount = 2;
+        _lineRenderer.positionCount = 5;
         _lineRenderer.SetPosition(0, transform.position);
-        _lineRenderer.SetPosition(1, Character2.transform.position);
+        _lineRenderer.SetPosition(1, Sphere.transform.position);
+        _lineRenderer.SetPosition(2, SphereTwo.transform.position);
+        _lineRenderer.SetPosition(3, SphereThree.transform.position);
+        _lineRenderer.SetPosition(4, Character2.transform.position);
     }
 
     private void Move()
