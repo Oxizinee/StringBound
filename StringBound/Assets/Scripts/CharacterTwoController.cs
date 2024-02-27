@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CharacterTwoController : MonoBehaviour
 {
@@ -14,11 +16,11 @@ public class CharacterTwoController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+     private void OnMove(InputValue value)
     {
-        _input = new Vector2(Input.GetAxis("HorizontalTwo"), Input.GetAxis("VerticalTwo"));
+        _input = value.Get<Vector2>();
     }
+
 
     private void FixedUpdate()
     {

@@ -5,12 +5,14 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CharacterController : MonoBehaviour
+public class CharactersControlers : MonoBehaviour
 {
     // Start is called before the first frame update
-    public float MovementSpeed = 5;
+    public float PlayerOneMovementSpeed = 10;
+    public float PlayerTwoMovementSpeed = 5;
     public float JumpForce = 7;
     public bool _isGrounded;
+    public bool _playerOneActive = true;
 
 
     public GameObject Character2;
@@ -36,10 +38,11 @@ public class CharacterController : MonoBehaviour
             _jumpPressed = true;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnChange()
     {
+        _playerOneActive = !_playerOneActive;
     }
+
     private void FixedUpdate()
     {
         Move();
@@ -73,17 +76,24 @@ public class CharacterController : MonoBehaviour
 
     private void Move()
     {
-        _rb.velocity = new Vector3(Vector3.right.x * _input.x * MovementSpeed, _rb.velocity.y, Vector3.forward.z * _input.y * MovementSpeed);
-
-        if (_jumpPressed && isGrounded())
+        if (_playerOneActive)
         {
-            _rb.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
-        }
-        else if(!isGrounded())
-        {
-            _jumpPressed = false;
-            _rb.AddForce(-Vector3.up * 9.81f);
+            _rb.velocity = new Vector3(Vector3.right.x * _input.x * PlayerOneMovementSpeed, _rb.velocity.y, Vector3.forward.z * _input.y * PlayerOneMovementSpeed);
+
+            if (_jumpPressed && isGrounded())
+            {
+                _rb.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
+            }
+            else if (!isGrounded())
+            {
+                _jumpPressed = false;
+                _rb.AddForce(-Vector3.up * 9.81f);
+            }
         }
 
+        else
+        {
+            Character2.GetComponent<Rigidbody>().velocity = new Vector3(Vector3.right.x * _input.x * PlayerTwoMovementSpeed, _rb.velocity.y, Vector3.forward.z * _input.y * PlayerTwoMovementSpeed);
+        }
     }
 }

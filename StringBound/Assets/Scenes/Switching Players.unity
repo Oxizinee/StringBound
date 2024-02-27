@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 234454795}
   - component: {fileID: 234454794}
   - component: {fileID: 234454793}
-  - component: {fileID: 234454801}
+  - component: {fileID: 234454803}
   - component: {fileID: 234454799}
   - component: {fileID: 234454800}
   - component: {fileID: 234454802}
@@ -472,7 +472,7 @@ ConfigurableJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 1
   m_EnablePreprocessing: 1
-  m_MassScale: 2.5
+  m_MassScale: 3
   m_ConnectedMassScale: 7
 --- !u!120 &234454800
 LineRenderer:
@@ -578,22 +578,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &234454801
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 234454791}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4ccf4ab6f303934998100c442ca25e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MovementSpeed: 5
-  JumpForce: 7
-  _isGrounded: 0
-  Character2: {fileID: 1122332813}
 --- !u!114 &234454802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -624,6 +608,24 @@ MonoBehaviour:
   m_DefaultActionMap: PlayerOne
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &234454803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234454791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb506d3abec3b464c9329f4eb6069148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerOneMovementSpeed: 5
+  PlayerTwoMovementSpeed: 5
+  JumpForce: 7
+  _isGrounded: 0
+  _playerOneActive: 0
+  Character2: {fileID: 1122332813}
 --- !u!1 &482984538
 GameObject:
   m_ObjectHideFlags: 0
@@ -1289,7 +1291,6 @@ GameObject:
   - component: {fileID: 1122332817}
   - component: {fileID: 1122332816}
   - component: {fileID: 1122332815}
-  - component: {fileID: 1122332819}
   - component: {fileID: 1122332814}
   - component: {fileID: 1122332820}
   m_Layer: 0
@@ -1414,19 +1415,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1122332819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1122332813}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96eb65bdfcda2bc4993d23967e42d065, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MovementSpeed: 5
 --- !u!114 &1122332820
 MonoBehaviour:
   m_ObjectHideFlags: 0
