@@ -18,13 +18,11 @@ public class CharacterController : MonoBehaviour
     private bool _jumpPressed;
     private Vector2 _input;
     private Rigidbody _rb;
-    private SpringJoint _springJoint;
     private LineRenderer _lineRenderer;
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
-        _lineRenderer = GetComponent<LineRenderer>();
-        _springJoint = GetComponent<SpringJoint>();
+        _lineRenderer = GetComponentInChildren<LineRenderer>();
     }
     private void OnMove(InputValue value)
     {

@@ -6,11 +6,13 @@ TagManager:
   tags:
   - Cube
   - Door
+  - Spawner
+  - Rope
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - 

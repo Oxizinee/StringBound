@@ -29,9 +29,13 @@ public class CameraControl : MonoBehaviour
         {
             VirtualCamera.transform.position += Vector3.right * Time.deltaTime * Speed;
         }
-        else if(CharacterOneScreenPos.x < 0 + distance || CharacterTwoScreenPos.x < 0 + distance)
+        else if (CharacterOneScreenPos.x < 0 + distance || CharacterTwoScreenPos.x < 0 + distance)
         {
             VirtualCamera.transform.position -= Vector3.right * Time.deltaTime * Speed;
+        }
+        else if (CharacterOneScreenPos.y < 0 + distance || CharacterTwoScreenPos.y < 0 + distance)
+        {
+            VirtualCamera.transform.position -= Vector3.forward * Time.deltaTime * Speed;
         }
 
         else
