@@ -31,7 +31,7 @@ public class CharacterController : MonoBehaviour
 
     private void OnJump()
     {
-            _jumpPressed = true;
+        _jumpPressed = true;
     }
 
     // Update is called once per frame

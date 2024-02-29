@@ -9,18 +9,47 @@ public class CharacterTwoController : MonoBehaviour
     // Start is called before the first frame update
     private Vector2 _input;
     public float MovementSpeed = 5;
-
+    public GameObject JointSphere;
+    public float extendSpeed = 1;
     private Rigidbody _rb;
+
+    private float _buttonValue;
+    private ConfigurableJoint _joint;
+    private SoftJointLimit _jointLimit;
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
+        _joint = JointSphere.GetComponent<ConfigurableJoint>();
+        _jointLimit = _joint.linearLimit;
     }
 
+    private void OnStringHold(InputValue value)
+    {
+        _buttonValue = value.Get<float>();
+    }
      private void OnMove(InputValue value)
     {
         _input = value.Get<Vector2>();
     }
 
+    private void Update()
+    {
+        HandleString();
+    }
+
+    private void HandleString()
+    {
+        if (_buttonValue > 0)
+        {
+            _jointLimit.limit = Mathf.Clamp(_jointLimit.limit + extendSpeed, 2, 6);
+        }
+        else if (_buttonValue <= 0)
+        {
+            _jointLimit.limit = Mathf.Clamp(_jointLimit.limit - extendSpeed, 2, 6);
+        }
+
+        _joint.linearLimit = _jointLimit;
+    }
 
     private void FixedUpdate()
     {

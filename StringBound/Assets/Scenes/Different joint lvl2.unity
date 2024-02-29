@@ -1721,6 +1721,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementSpeed: 5
+  JointSphere: {fileID: 2134389963}
+  extendSpeed: 0.3
 --- !u!114 &1122332820
 MonoBehaviour:
   m_ObjectHideFlags: 0

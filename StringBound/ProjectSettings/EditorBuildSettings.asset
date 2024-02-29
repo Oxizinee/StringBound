@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Different joint puzzle2.unity
     guid: 9d1401475c0992f4590326629cbe3429
+  - enabled: 1
+    path: Assets/Scenes/Different joint puzzle2 1.unity
+    guid: d1386415075806d479223c773f19eef5
   m_configObjects: {}
