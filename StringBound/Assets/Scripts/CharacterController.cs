@@ -40,6 +40,20 @@ public class CharacterController : MonoBehaviour
         ThrowValue = value.Get<float>();
     }
 
+    private IEnumerator ThrowPlayer()
+    {
+        float t = 0;
+        Vector3 startPos = Character2.transform.position;
+        while (t < 1)
+        {
+            t += Time.deltaTime;
+            float angle = t * Mathf.PI;
+            float sin = Mathf.Sin(angle);
+            Character2.transform.position = startPos + Vector3.up * ThrowStrength * sin;
+            yield return null;
+        }
+
+    }
     private void GrabbingBehaviour()
     {
         if (isGrabed)
@@ -48,8 +62,9 @@ public class CharacterController : MonoBehaviour
             Character2.GetComponent<Rigidbody>().isKinematic = true;
             if (ThrowValue > 0)
             {
-                Character2.GetComponent<Rigidbody>().isKinematic = false;
-                Character2.GetComponent<Rigidbody>().AddForce(Vector3.up * ThrowStrength * Time.deltaTime, ForceMode.VelocityChange);
+                // Character2.GetComponent<Rigidbody>().isKinematic = false;
+                StartCoroutine(ThrowPlayer());
+              //  Character2.GetComponent<Rigidbody>().AddForce(Vector3.up * ThrowStrength * Time.deltaTime, ForceMode.VelocityChange);
                 isGrabed = false;
             }
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Timeline;
 
 public class CharacterTwoController : MonoBehaviour
 {
@@ -12,8 +13,7 @@ public class CharacterTwoController : MonoBehaviour
     public GameObject JointSphere;
     public float extendSpeed = 1;
     private Rigidbody _rb;
-
-
+    
     public bool IsBeingHeld;
 
     private float _buttonValue;
@@ -85,4 +85,5 @@ public class CharacterTwoController : MonoBehaviour
             _rb.AddForce(-Vector3.up * 9.81f);
         }
     }
+   
 }
