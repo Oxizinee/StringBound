@@ -85,5 +85,15 @@ public class CharacterTwoController : MonoBehaviour
             _rb.AddForce(-Vector3.up * 9.81f);
         }
     }
+
+    public void AimMove(GameObject aim, float speed)
+    {
+        if(!IsBeingHeld) return;
+
+        aim.SetActive(true);
+        aim.transform.parent = null;
+        aim.transform.Translate(new Vector3(Vector3.right.x * _input.x * speed * Time.deltaTime, 0, 
+            Vector3.forward.z * _input.y * speed * Time.deltaTime));
+    }
    
 }

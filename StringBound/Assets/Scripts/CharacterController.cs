@@ -11,6 +11,7 @@ public class CharacterController : MonoBehaviour
     public float MovementSpeed = 5;
     public bool _isGrounded;
 
+    public GameObject ThrowAim;
     public GameObject Sphere, SphereTwo, SphereThree;
     public GameObject Character2;
 
@@ -25,6 +26,7 @@ public class CharacterController : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _lineRenderer = GetComponentInChildren<LineRenderer>();
+        ThrowAim.SetActive(false);
     }
 
     private void OnGrab()
@@ -60,11 +62,10 @@ public class CharacterController : MonoBehaviour
         {
             Character2.GetComponent<CharacterTwoController>().IsBeingHeld = true;
             Character2.GetComponent<Rigidbody>().isKinematic = true;
+            Character2.GetComponent<CharacterTwoController>().AimMove(ThrowAim, 7);
             if (ThrowValue > 0)
             {
-                // Character2.GetComponent<Rigidbody>().isKinematic = false;
                 StartCoroutine(ThrowPlayer());
-              //  Character2.GetComponent<Rigidbody>().AddForce(Vector3.up * ThrowStrength * Time.deltaTime, ForceMode.VelocityChange);
                 isGrabed = false;
             }
         }
@@ -73,6 +74,9 @@ public class CharacterController : MonoBehaviour
             Character2.GetComponent<Rigidbody>().isKinematic = false;
             Character2.GetComponent<CharacterTwoController>().IsBeingHeld = false;
             Character2.transform.parent = null;
+            ThrowAim.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            ThrowAim.transform.parent = transform.parent;
+            ThrowAim.SetActive(false);
         }
     }
     // Update is called once per frame
