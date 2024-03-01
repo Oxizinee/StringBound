@@ -557,7 +557,7 @@ MonoBehaviour:
   Character2: {fileID: 1122332813}
   isGrabed: 0
   ThrowValue: 0
-  ThrowStrength: 7
+  ThrowStrength: 9
 --- !u!114 &234454802
 MonoBehaviour:
   m_ObjectHideFlags: 0

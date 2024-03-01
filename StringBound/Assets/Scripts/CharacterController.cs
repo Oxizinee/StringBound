@@ -46,15 +46,18 @@ public class CharacterController : MonoBehaviour
     {
         float t = 0;
         Vector3 startPos = Character2.transform.position;
+        Vector3 displacement = ThrowAim.transform.position - startPos;
+        Vector3 targetPos = Character2.transform.position + (Vector3.up * ThrowStrength) + displacement;
+        
         while (t < 1)
         {
             t += Time.deltaTime;
-            float angle = t * Mathf.PI;
-            float sin = Mathf.Sin(angle);
-            Character2.transform.position = startPos + Vector3.up * ThrowStrength * sin;
+
+            Character2.transform.position = Vector3.Lerp(startPos, targetPos, t);
+
+
             yield return null;
         }
-
     }
     private void GrabbingBehaviour()
     {
