@@ -35,23 +35,10 @@ public class CharacterTwoController : MonoBehaviour
         _input = value.Get<Vector2>();
     }
 
-    private void BeingHeldBehaviour()
-    {
-        if (IsBeingHeld)
-        {
-            _rb.isKinematic = true;
-        }
-        else
-        {
-            _rb.isKinematic=false;
-            transform.parent = null;
-        }
-    }
 
     private void Update()
     {
         //HandleString();
-        BeingHeldBehaviour();
     }
 
     private void HandleString()

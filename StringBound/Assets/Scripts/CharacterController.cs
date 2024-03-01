@@ -15,6 +15,8 @@ public class CharacterController : MonoBehaviour
     public GameObject Character2;
 
     public bool isGrabed;
+    public float ThrowValue;
+    public int ThrowStrength = 2500;
 
     private Vector2 _input;
     private Rigidbody _rb;
@@ -33,16 +35,29 @@ public class CharacterController : MonoBehaviour
     {
         _input = value.Get<Vector2>();
     }
+    private void OnThrow(InputValue value)
+    {
+        ThrowValue = value.Get<float>();
+    }
 
     private void GrabbingBehaviour()
     {
         if (isGrabed)
         {
             Character2.GetComponent<CharacterTwoController>().IsBeingHeld = true;
+            Character2.GetComponent<Rigidbody>().isKinematic = true;
+            if (ThrowValue > 0)
+            {
+                Character2.GetComponent<Rigidbody>().isKinematic = false;
+                Character2.GetComponent<Rigidbody>().AddForce(Vector3.up * ThrowStrength * Time.deltaTime, ForceMode.VelocityChange);
+                isGrabed = false;
+            }
         }
         else
         {
+            Character2.GetComponent<Rigidbody>().isKinematic = false;
             Character2.GetComponent<CharacterTwoController>().IsBeingHeld = false;
+            Character2.transform.parent = null;
         }
     }
     // Update is called once per frame
@@ -87,5 +102,12 @@ public class CharacterController : MonoBehaviour
     private void Move()
     {
         _rb.velocity = new Vector3(Vector3.right.x * _input.x * MovementSpeed, _rb.velocity.y, Vector3.forward.z * _input.y * MovementSpeed);
+
+        if (!isGrounded())
+        {
+            _rb.AddForce(-Vector3.up * 9.81f);
+        }
     }
+
+   
 }

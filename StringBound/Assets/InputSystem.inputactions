@@ -24,13 +24,13 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Change",
-                    "type": "Button",
+                    "name": "Throw",
+                    "type": "Value",
                     "id": "eb474b8f-fee3-4f3f-bc38-3ad7d6475cfe",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -59,11 +59,11 @@
                 {
                     "name": "",
                     "id": "b137e8c3-6e72-4b95-89c7-5ff33bf2c039",
-                    "path": "<XInputController>/buttonEast",
+                    "path": "<XInputController>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Change",
+                    "action": "Throw",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
