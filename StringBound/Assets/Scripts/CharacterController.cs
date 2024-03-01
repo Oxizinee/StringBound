@@ -9,13 +9,13 @@ public class CharacterController : MonoBehaviour
 {
     // Start is called before the first frame update
     public float MovementSpeed = 5;
-    public float JumpForce = 7;
     public bool _isGrounded;
 
     public GameObject Sphere, SphereTwo, SphereThree;
     public GameObject Character2;
 
-    private bool _jumpPressed;
+    public bool isGrabed;
+
     private Vector2 _input;
     private Rigidbody _rb;
     private LineRenderer _lineRenderer;
@@ -24,19 +24,31 @@ public class CharacterController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _lineRenderer = GetComponentInChildren<LineRenderer>();
     }
+
+    private void OnGrab()
+    {
+        isGrabed = !isGrabed;
+    }
     private void OnMove(InputValue value)
     {
         _input = value.Get<Vector2>();
     }
 
-    private void OnJump()
+    private void GrabbingBehaviour()
     {
-        _jumpPressed = true;
+        if (isGrabed)
+        {
+            Character2.GetComponent<CharacterTwoController>().IsBeingHeld = true;
+        }
+        else
+        {
+            Character2.GetComponent<CharacterTwoController>().IsBeingHeld = false;
+        }
     }
-
     // Update is called once per frame
     void Update()
     {
+        GrabbingBehaviour();
     }
     private void FixedUpdate()
     {
@@ -75,16 +87,5 @@ public class CharacterController : MonoBehaviour
     private void Move()
     {
         _rb.velocity = new Vector3(Vector3.right.x * _input.x * MovementSpeed, _rb.velocity.y, Vector3.forward.z * _input.y * MovementSpeed);
-
-        if (_jumpPressed && isGrounded())
-        {
-            _rb.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
-        }
-        else if(!isGrounded())
-        {
-            _jumpPressed = false;
-            _rb.AddForce(-Vector3.up * 9.81f);
-        }
-
     }
 }

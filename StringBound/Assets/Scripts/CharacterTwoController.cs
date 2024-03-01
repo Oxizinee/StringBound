@@ -13,6 +13,9 @@ public class CharacterTwoController : MonoBehaviour
     public float extendSpeed = 1;
     private Rigidbody _rb;
 
+
+    public bool IsBeingHeld;
+
     private float _buttonValue;
     private ConfigurableJoint _joint;
     private SoftJointLimit _jointLimit;
@@ -32,9 +35,23 @@ public class CharacterTwoController : MonoBehaviour
         _input = value.Get<Vector2>();
     }
 
+    private void BeingHeldBehaviour()
+    {
+        if (IsBeingHeld)
+        {
+            _rb.isKinematic = true;
+        }
+        else
+        {
+            _rb.isKinematic=false;
+            transform.parent = null;
+        }
+    }
+
     private void Update()
     {
-        HandleString();
+        //HandleString();
+        BeingHeldBehaviour();
     }
 
     private void HandleString()
@@ -68,13 +85,17 @@ public class CharacterTwoController : MonoBehaviour
             return false;
         }
     }
+
     private void Move()
     {
+        if (IsBeingHeld) return;
+
+
         _rb.velocity = new Vector3(Vector3.right.x * _input.x * MovementSpeed, _rb.velocity.y, Vector3.forward.z * _input.y * MovementSpeed);
 
         if (!isGrounded())
         {
-            _rb.AddForce(-Vector3.up * 15);
+            _rb.AddForce(-Vector3.up * 9.81f);
         }
     }
 }

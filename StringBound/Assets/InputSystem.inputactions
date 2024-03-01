@@ -15,7 +15,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Jump",
+                    "name": "Grab",
                     "type": "Button",
                     "id": "4ecb116c-4258-41f2-a719-06ada7d2d1a1",
                     "expectedControlType": "Button",
@@ -52,7 +52,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Jump",
+                    "action": "Grab",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
