@@ -1450,6 +1450,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementSpeed: 5
+  JointSphere: {fileID: 2134389963}
+  extendSpeed: 1
 --- !u!114 &1122332820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2111,7 +2113,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectTag: Rope
+  HighlightMat: {fileID: 0}
   checkNumber: 2
+  _meshRenderer: {fileID: 0}
 --- !u!136 &1637763235
 CapsuleCollider:
   m_ObjectHideFlags: 0
