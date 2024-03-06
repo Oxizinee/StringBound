@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,11 +15,18 @@ public class CharacterController : MonoBehaviour
     public GameObject ThrowAim;
     public GameObject Sphere, SphereTwo, SphereThree;
     public GameObject Character2;
+    public GameObject TargetGroup;
 
-    public bool isGrabed;
+    public float extendSpeed = 0.5f;
+    [SerializeField]private float _stringShortenButton;
+    public ConfigurableJoint[] Ropes;
+    private SoftJointLimit _jointLimit;
+
+    public bool isHolding;
     public float ThrowValue;
     public int ThrowStrength = 2500;
 
+    private CinemachineTargetGroup _targetGroup;
     private Vector2 _input;
     private Rigidbody _rb;
     private LineRenderer _lineRenderer;
@@ -27,11 +35,17 @@ public class CharacterController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _lineRenderer = GetComponentInChildren<LineRenderer>();
         ThrowAim.SetActive(false);
+        _targetGroup = TargetGroup.GetComponent<CinemachineTargetGroup>();
+        _jointLimit = Ropes[0].linearLimit;
     }
 
+    private void  OnStringExtend(InputValue value)
+    {
+        _stringShortenButton = value.Get<float>();
+    }
     private void OnGrab()
     {
-        isGrabed = !isGrabed;
+        isHolding = !isHolding;
     }
     private void OnMove(InputValue value)
     {
@@ -61,15 +75,16 @@ public class CharacterController : MonoBehaviour
     }
     private void GrabbingBehaviour()
     {
-        if (isGrabed)
+        if (isHolding && Character2.GetComponent<CharacterTwoController>().IsBeingHeld)
         {
-            Character2.GetComponent<CharacterTwoController>().IsBeingHeld = true;
+            _targetGroup.m_Targets[1].weight = 0;
+            _targetGroup.m_Targets[2].weight = 1;
             Character2.GetComponent<Rigidbody>().isKinematic = true;
             Character2.GetComponent<CharacterTwoController>().AimMove(ThrowAim, 7);
             if (ThrowValue > 0)
             {
                 StartCoroutine(ThrowPlayer());
-                isGrabed = false;
+                isHolding = false;
             }
         }
         else
@@ -80,12 +95,15 @@ public class CharacterController : MonoBehaviour
             ThrowAim.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
             ThrowAim.transform.parent = transform.parent;
             ThrowAim.SetActive(false);
+            _targetGroup.m_Targets[1].weight = 1;
+            _targetGroup.m_Targets[2].weight = 0;
         }
     }
     // Update is called once per frame
     void Update()
     {
         GrabbingBehaviour();
+        HandleString();
     }
     private void FixedUpdate()
     {
@@ -111,6 +129,30 @@ public class CharacterController : MonoBehaviour
         }
     }
 
+    private void HandleString()
+    {
+        if(isHolding) return;
+
+        if (_stringShortenButton == 1)
+        {
+            for(int i = 0; i < Ropes.Length; i++)
+            {
+                _jointLimit.limit = Mathf.Clamp(_jointLimit.limit - (extendSpeed * Time.deltaTime), 0, 2);
+            }
+        }
+        else if (_stringShortenButton == 0)
+        {
+            for (int i = 0; i < Ropes.Length; i++)
+            {
+                _jointLimit.limit = Mathf.Clamp(_jointLimit.limit + (extendSpeed * Time.deltaTime), 0, 2);
+            }
+        }
+
+        for (int i = 0; i < Ropes.Length; i++)
+        {
+            Ropes[i].linearLimit = _jointLimit;
+        }
+    }
     private void DrawRope()
     {
         _lineRenderer.positionCount = 5;

@@ -8,7 +8,6 @@ public class Door : MonoBehaviour
 {
     // Start is called before the first frame update
     public bool[] check;
-
     void Start()
     {
     }

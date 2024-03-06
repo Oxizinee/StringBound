@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -13,10 +14,12 @@ public class CharacterTwoController : MonoBehaviour
     public GameObject JointSphere;
     public float extendSpeed = 1;
     private Rigidbody _rb;
-    
     public bool IsBeingHeld;
+    public Material StoneMat;
+    private Material _deafultMat;
 
-    private float _buttonValue;
+    private RigidbodyConstraints _constraints;
+    public bool isStone;
     private ConfigurableJoint _joint;
     private SoftJointLimit _jointLimit;
     void Start()
@@ -24,11 +27,13 @@ public class CharacterTwoController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _joint = JointSphere.GetComponent<ConfigurableJoint>();
         _jointLimit = _joint.linearLimit;
+       _constraints = _rb.constraints;
+        _deafultMat = GetComponent<MeshRenderer>().sharedMaterial;
     }
 
-    private void OnStringHold(InputValue value)
+    private void OnTurnStone()
     {
-        _buttonValue = value.Get<float>();
+        isStone = !isStone;
     }
      private void OnMove(InputValue value)
     {
@@ -38,29 +43,38 @@ public class CharacterTwoController : MonoBehaviour
 
     private void Update()
     {
-        //HandleString();
+        TurnToStone();
     }
 
-    private void HandleString()
+    private void TurnToStone()
     {
-        if (_buttonValue > 0)
+        if (isStone)
         {
-            _jointLimit.limit = Mathf.Clamp(_jointLimit.limit + extendSpeed, 2, 6);
+            GetComponent<MeshRenderer>().sharedMaterial = StoneMat;
+            if (isGrounded())
+            {
+                _rb.constraints = RigidbodyConstraints.FreezeAll;
+            }
+            else
+            {
+                _rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ |
+              RigidbodyConstraints.FreezeRotation;
+            }
         }
-        else if (_buttonValue <= 0)
+        else
         {
-            _jointLimit.limit = Mathf.Clamp(_jointLimit.limit - extendSpeed, 2, 6);
+            GetComponent<MeshRenderer>().sharedMaterial = _deafultMat;
+            _rb.constraints = _constraints;
         }
-
-        _joint.linearLimit = _jointLimit;
     }
+
 
     private void FixedUpdate()
     {
         Move();
 
     }
-    private bool isGrounded()
+    public bool isGrounded()
     {
         Debug.DrawRay(new Vector3(transform.position.x, transform.position.y - (transform.localScale.y / 2), transform.position.z), -Vector3.up, Color.red);
         if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y - (transform.localScale.y / 2), transform.position.z), -Vector3.up, 0.8f))
@@ -76,6 +90,7 @@ public class CharacterTwoController : MonoBehaviour
     private void Move()
     {
         if (IsBeingHeld) return;
+        if(isStone) return;
 
 
         _rb.velocity = new Vector3(Vector3.right.x * _input.x * MovementSpeed, _rb.velocity.y, Vector3.forward.z * _input.y * MovementSpeed);

@@ -31,6 +31,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "StringExtend",
+                    "type": "Value",
+                    "id": "3fc539b1-74d1-4f08-905a-e751d1cc607e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -66,6 +75,17 @@
                     "action": "Throw",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "26dd8936-f38f-4f0b-8288-5b2046ceb6d6",
+                    "path": "<XInputController>/rightTrigger",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StringExtend",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -83,12 +103,12 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "StringHold",
-                    "type": "Value",
+                    "name": "TurnStone",
+                    "type": "Button",
                     "id": "98211230-49c6-496a-87e2-4c20d6e5df85",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "initialStateCheck": true
                 }
             ],
@@ -111,7 +131,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "StringHold",
+                    "action": "TurnStone",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
