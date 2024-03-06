@@ -38,7 +38,7 @@ public class CharacterController : MonoBehaviour
         _targetGroup = TargetGroup.GetComponent<CinemachineTargetGroup>();
         _jointLimit = Ropes[0].linearLimit;
     }
-
+    
     private void  OnStringExtend(InputValue value)
     {
         _stringShortenButton = value.Get<float>();

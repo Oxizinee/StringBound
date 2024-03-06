@@ -48,6 +48,8 @@ public class CharacterTwoController : MonoBehaviour
 
     private void TurnToStone()
     {
+        if(IsBeingHeld) return;
+
         if (isStone)
         {
             GetComponent<MeshRenderer>().sharedMaterial = StoneMat;
